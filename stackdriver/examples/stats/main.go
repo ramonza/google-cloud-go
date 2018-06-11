@@ -1,4 +1,4 @@
-// Copyright 2017, OpenCensus Authors
+// Copyright 2018, Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// +build go1.8
+
 // Command stackdriver is an example program that collects data for
 // video size. Collected data is exported to
 // Stackdriver Monitoring.
@@ -23,7 +25,7 @@ import (
 	"log"
 	"time"
 
-	"contrib.go.opencensus.io/exporter/stackdriver"
+	"cloud.google.com/go/stackdriver"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
 )
@@ -57,15 +59,14 @@ func main() {
 	view.SetReportingPeriod(1 * time.Second)
 
 	// Create view to see the processed video size cumulatively.
-	// Subscribe will allow view data to be exported.
-	// Once no longer need, you can unsubscribe from the view.
+	// Register will allow view data to be exported.
 	if err := view.Register(&view.View{
 		Name:        "my.org/views/video_size_cum",
 		Description: "processed video size over time",
 		Measure:     videoSize,
 		Aggregation: view.Distribution(0, 1<<16, 1<<32),
 	}); err != nil {
-		log.Fatalf("Cannot subscribe to the view: %v", err)
+		log.Fatalf("Failed to register view: %v", err)
 	}
 
 	processVideo(ctx)

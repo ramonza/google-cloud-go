@@ -1,4 +1,4 @@
-// Copyright 2017, OpenCensus Authors
+// Copyright 2018, Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,6 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+// +build go1.8
 
 package stackdriver
 
@@ -119,7 +121,7 @@ func (e *traceExporter) uploadSpans(spans []*trace.SpanData) {
 	// Create a never-sampled span to prevent traces associated with exporter.
 	ctx, span := trace.StartSpan( // TODO: add timeouts
 		context.Background(),
-		"contrib.go.opencensus.io/exporter/stackdriver.uploadSpans",
+		"cloud.google.com/go/stackdriver.uploadSpans",
 		trace.WithSampler(trace.NeverSample()),
 	)
 	defer span.End()

@@ -1,4 +1,4 @@
-// Copyright 2018, OpenCensus Authors
+// Copyright 2018, Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// +build go1.8
+
 package stackdriver_test
 
 import (
 	"log"
 	"net/http"
 
-	"contrib.go.opencensus.io/exporter/stackdriver"
-	"contrib.go.opencensus.io/exporter/stackdriver/propagation"
+	"cloud.google.com/go/stackdriver"
+	"cloud.google.com/go/stackdriver/propagation"
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/trace"
@@ -34,7 +36,7 @@ func Example() {
 	// Export to Stackdriver Monitoring.
 	view.RegisterExporter(exporter)
 
-	// Subscribe views to see stats in Stackdriver Monitoring.
+	// Register views to see stats in Stackdriver Monitoring.
 	if err := view.Register(
 		ochttp.ClientLatencyView,
 		ochttp.ClientResponseBytesView,

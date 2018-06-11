@@ -20,6 +20,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -39,9 +40,15 @@ func TestContextImport(t *testing.T) {
 		}
 
 		fset := token.NewFileSet()
-		file, err := parser.ParseFile(fset, path, nil, parser.ImportsOnly)
+		file, err := parser.ParseFile(fset, path, nil, parser.ImportsOnly|parser.ParseComments)
 		if err != nil {
 			return err
+		}
+
+		for _, comment := range file.Comments {
+			if strings.HasPrefix(comment.Text(), "+build go1.8") {
+				return nil // do not check for context if compiling for 1.8+
+			}
 		}
 
 		for _, imp := range file.Imports {

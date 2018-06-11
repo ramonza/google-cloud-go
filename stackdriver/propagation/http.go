@@ -1,4 +1,4 @@
-// Copyright 2018, OpenCensus Authors
+// Copyright 2018, Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package propagation implement X-Cloud-Trace-Context header propagation used
+// +build go1.8
+
+// Package propagation implements X-Cloud-Trace-Context header propagation used
 // by Google Cloud products.
-package propagation // import "contrib.go.opencensus.io/exporter/stackdriver/propagation"
+package propagation // import "cloud.google.com/go/stackdriver/propagation"
 
 import (
 	"encoding/binary"

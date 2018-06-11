@@ -1,4 +1,4 @@
-// Copyright 2018, OpenCensus Authors
+// Copyright 2018, Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// +build go1.8
+
 // Package stackdriver contains the OpenCensus exporters for
-// Stackdriver Monitoring and Stackdriver Tracing.
-//
-// Please note that the Stackdriver exporter is currently experimental.
+// Stackdriver Monitoring and Stackdriver Trace.
 //
 // The package uses Application Default Credentials to authenticate.  See
 // https://developers.google.com/identity/protocols/application-default-credentials
-package stackdriver // import "contrib.go.opencensus.io/exporter/stackdriver"
+package stackdriver
 
 import (
 	"context"

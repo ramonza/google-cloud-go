@@ -1,4 +1,4 @@
-// Copyright 2017, OpenCensus Authors
+// Copyright 2018, Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,6 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+// +build go1.8
 
 package stackdriver
 
@@ -25,14 +27,13 @@ import (
 	"sync"
 	"time"
 
+	"cloud.google.com/go/monitoring/apiv3"
+	"github.com/golang/protobuf/ptypes/timestamp"
 	opencensus "go.opencensus.io"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
 	"go.opencensus.io/trace"
-
-	"cloud.google.com/go/monitoring/apiv3"
-	"github.com/golang/protobuf/ptypes/timestamp"
 	"google.golang.org/api/option"
 	"google.golang.org/api/support/bundler"
 	distributionpb "google.golang.org/genproto/googleapis/api/distribution"
@@ -48,7 +49,7 @@ const (
 	opencensusTaskKey         = "opencensus_task"
 	opencensusTaskDescription = "Opencensus task identifier"
 	defaultDisplayNamePrefix  = "OpenCensus"
-	version                   = "0.4.0"
+	version                   = "0.24.0"
 )
 
 var userAgent = fmt.Sprintf("opencensus-go %s; stackdriver-exporter %s", opencensus.Version(), version)
@@ -162,7 +163,7 @@ func (e *statsExporter) Flush() {
 func (e *statsExporter) uploadStats(vds []*view.Data) error {
 	ctx, span := trace.StartSpan(
 		context.Background(),
-		"contrib.go.opencensus.io/exporter/stackdriver.uploadStats",
+		"cloud.google.com/go/stackdriver.uploadStats",
 		trace.WithSampler(trace.NeverSample()),
 	)
 	defer span.End()
